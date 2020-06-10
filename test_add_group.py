@@ -5,16 +5,17 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
+import unittest
 
 class TestAddGroup(unittest.TestCase):
     def setUp(self):
-        self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(30)
+        self.wd = webdriver.Firefox()        self.wd.implicitly_wait(30)
 
     def test_add_group(self):
         wd = self.wd
+        # open home page
         wd.get("http://localhost/group.php")
+        # login
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys("admin")
         wd.find_element_by_id("LoginForm").click()
@@ -22,8 +23,11 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys("secret")
         wd.find_element_by_xpath(u"//input[@value='Login']").click()
+        # open group page
         wd.find_element_by_link_text("groups").click()
+        # init group creation
         wd.find_element_by_name("new").click()
+        # fill group form
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
         wd.find_element_by_name("group_name").send_keys("qwert")
@@ -33,8 +37,11 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element_by_name("group_footer").click()
         wd.find_element_by_name("group_footer").clear()
         wd.find_element_by_name("group_footer").send_keys("qwert")
+        # submit group creation
         wd.find_element_by_name("submit").click()
+        # return from group page
         wd.find_element_by_link_text("group page").click()
+        # logout
         wd.find_element_by_link_text("Logout").click()
     
     def is_element_present(self, how, what):
